@@ -1,0 +1,113 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usetheme{metropolis}
+\begin{document}
+	\title{简单的枚举贪心选讲}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{前言}
+		\par 本次讲课对枚举的大概定位为：“按...的顺序枚举，然后维护答案”
+		\par 本次讲课对贪心的大概定位为：用到贪心思想
+		\par 题目不会特别区分枚举和贪心
+		\par 题目以随机的顺序排列
+		\par 内容比较简单，大家放心食用
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{贪心基础}
+		\par 考虑两种决策，其中$A$的贡献不比$B$小，那么选$B$之前要选$A$
+		\par 如果两种操作$AB$间相互影响，那么需要选$A$后需要添加选$B$然后撤回$A$的操作
+		\par 如果部分操作一定会连续进行，可以尝试合并
+		\par 如果不好想的话，可以尝试先建出费用流，然后利用这张图的特殊性，用较低复杂度模拟出费用流（具体看后面）
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{NOI2019序列}
+		\par 给定序列$A,B$它们长度为$n$，在这两个序列中各选$m$个数，需要满足至少有$k$个下标$A,B$都选了，求这$2m$个数的最大的和
+		\par $k\le m\le n\le 2\times 10^5$
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 考虑到贪心时决策间有影响，可能需要撤回操作，考虑费用流建图
+
+		\onslide<2-> $A,B$分别向$S,T$连边，边权为权值取相反数，然后相同标号的$A$向$B$连边
+
+		\onslide<3-> 因为有至多$m-k$对不用选相同下标，新建两个点$u,v$，连流量$m-k$费用$0$的边，$A$的点向$u$连，$v$向$B$的点连，就处理掉了$m-k$个可以下标不相同的点了
+
+		\onslide<4-> 要快速模拟出来就只要维护$A$中选了/任意中$B$最大的，$B$中选了/任意中的$A$最大的，$AB$都没选的最大的$A+B$
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1208G Polygons}
+		\par 给定$n,k$
+		\par 你需要构造$k$个有相同外接圆，使得边数在$3\sim n$间且边数两两不同
+		\par 你可以任意旋转它们，求它们与这个外接圆的最少交点数
+		\par 下面是$n=6,k=2$（边数为$3,6$）的一种方案
+		\par \includegraphics[width = 0.4\textwidth]{1.png}
+		\par $k\le n-2,n\le 10^6$
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 显然，这些多边形会有一个共同的交点
+
+		\onslide<2-> 于是，发现如果$u|v$，那么$u$肯定比$v$先选
+
+		\onslide<3-> 并且如果所有$u|v$都选了，那么$v$的代价为$\phi(v)$
+
+		\onslide<4-> 按$\phi$排序后从小到大选即可，当然因为没有$2$边形，特判掉即可
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{IOI2019排列鞋子}
+		\par 给定长度为$2n$的数组$S$
+		\par 一个数组合法当且仅当$\forall i,\exists j>0,a_{2i-1}=-j,a_{2i}=j$
+		\par 每次可以交换相邻两个数，求最少交换次数
+		\par $n\le 10^5,1\le |a_i|\le n$
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 做$n$次，每次把与当前序列中第一个配对的移到前面来（有相同值就取第一个），然后删除
+		\onslide<2-> 考虑证明
+
+		\onslide<2-> 显然，当$S_i$有相同的时候，贪心从前往后配对（并给新标号）是对的，记$p_v$为$v$的位置
+
+		\onslide<3-> 把$i$和$−i$配对，要交换$|p_i−p_{−i}|−[p_{−i}<p_i]$次，然后在交换的过程中，对所有$j$，且$p_j$和$p_{−j}$仅有一个在$p_i$到$p_{−i}$区间内，那么它们距离减一
+
+		\onslide<4-> 于是我们从前往后配对即可，把这个过程模拟出来就是上面做法了 
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{HNOI2010取石子游戏}
+		\par 总共有$n$堆石子依次排成一行，第$i$堆石子有$a_i$个石子。
+		\par 部分堆为$0$，如果一堆旁边有石子数为$0$的堆，就可以全部取走
+		\par 两人以此操作，问他们都用最优操作时，各能取几个石头
+		\par $n\le 10^6$
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 首先，如果存在$a,b,c$相邻，且$b\ge a,b\ge c$，当先手取了$a$时，接下来的操作一定是：$a\rightarrow b\rightarrow c$（$c$同理）
+
+		\onslide<2-> 因为取a一定是非正贡献，先手只能选a，就说明当前最优已经非正了，后手取b一定不劣
+
+		\onslide<2-> 然后如果先手不选c，那么a相当于白选，肯定不优
+
+		\onslide<2-> 于是我们可以把这样的a,b,c合并为a+c−b
+
+		\onslide<3-> 合并完后一定是连续上升或连续下降，除开头外显然从大到小选不劣
+
+		\onslide<3-> 开头的和连续下降末尾的连续上升如果是偶数长度先手就一定不会先选，否则可以纳入从大到小的选择里面
+
+	\end{frame}
+\end{document}
