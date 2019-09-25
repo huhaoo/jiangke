@@ -110,4 +110,50 @@
 		\onslide<3-> 开头的和连续下降末尾的连续上升如果是偶数长度先手就一定不会先选，否则可以纳入从大到小的选择里面
 
 	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{皇后游戏}
+		\par 给定长为$n$的序列$a,b$，对于一个排列$p$，有：
+		$$
+		f_i=\begin{cases}a_{p_1}+b_{p_1}&i=1\\\max(\sum_{j\le i} a_{p_j},f_{i-1})+b_{p_i}&i\not =1\end{cases}
+		$$
+		\par 求$f_n$的最小值
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 我们相邻两项$a_1,b_1,a_2,b_2$，即前面和为$s$上一个$f$值为$F$，显然之后后面那项的$f$对答案有影响，我们要使：
+
+		\onslide<2-> $$
+		\begin{aligned}
+			\max(s+a_1+a_2+b_2,s+a_1+b_1+b_2,F+b_1+b_2)&\le\\
+			\max(s+a_2+a_1+b_1,s+a_2+b_2+b_1,F+b_2+b_1)&
+		\end{aligned}
+		$$
+
+		\onslide<3-> 可以推出需要满足的条件为$\min(a_i,b_j)<\min(a_j,b_i)$，相等时按$a_i$从小到大排序即可
+		
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{end}
+		\onslide<1-> 本次讲课作为一道noip难度的讲课
+
+		\onslide<2-> 覆盖面广
+
+		\onslide<3-> 难度适中
+
+		\onslide<4-> 题量适中
+
+		\onslide<5-> 解法自然
+
+		\onslide<6-> 讲课人相信，这次美妙的讲课，可以给即将AK[NOIP2019|HNOI2020|NOI2020|WC2021|CTS2021|IOI2021]的你，提供一个有力的帮助
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{end}
+		\begin{center}
+			\Huge Thanks for listening
+		\end{center}
+	\end{frame}
 \end{document}
