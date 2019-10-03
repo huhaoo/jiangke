@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage{multirow}
 \usepackage{mathtools}
+\usepackage{ulem}
 \usetheme{metropolis}
 \begin{document}
 	\title{简单的枚举贪心选讲}
@@ -14,19 +15,77 @@
 	\clearpage
 	\begin{frame}
 		\frametitle{前言}
-		\par 本次讲课对枚举的大概定位为：“按...的顺序枚举，然后维护答案”
-		\par 本次讲课对贪心的大概定位为：用到贪心思想
-		\par 题目不会特别区分枚举和贪心
-		\par 题目以随机的顺序排列
-		\par 内容比较简单，大家放心食用
+		\onslide<1-> 由于没有什么题目主要是考枚举，所以不怎么讲枚举
+
+		\onslide<2-> 由于贪心比较简单的题没什么意思，也不存在有什么算法不会之类的问题，所以今天的题都不是特别难度
+
+		\onslide<3-> \sout{晚上有CF，所以题目较少}
 	\end{frame}
 	\clearpage
 	\begin{frame}
 		\frametitle{贪心基础}
-		\par 考虑两种决策，其中$A$的贡献不比$B$小，那么选$B$之前要选$A$
-		\par 如果两种操作$AB$间相互影响，那么需要选$A$后需要添加选$B$然后撤回$A$的操作
-		\par 如果部分操作一定会连续进行，可以尝试合并
-		\par 如果不好想的话，可以尝试先建出费用流，然后利用这张图的特殊性，用较低复杂度模拟出费用流（具体看后面）
+
+		\onslide<1-1> 贪心主要应用在\sout{猜结论}为最优性问题提供策略上，主要体现在：
+
+		\onslide<2-3> 两种决策，其中$A$的贡献不比$B$小，那么选$B$之前要选$A$
+
+		\onslide<3-3> 如果两种操作$AB$间相互影响，那么需要选$A$后需要添加选$B$然后撤回$A$的操作
+
+		\onslide<4-4> 如果部分操作一定会连续进行，可以尝试合并
+
+		\onslide<5-5> 对于部分题目是若干操作序列让你排列后依次贡献，可以考虑邻项交换
+
+		\onslide<6-6> 如果上面不好想的话，可以尝试先建出费用流，然后利用这张图的特殊性，用较低复杂度模拟出费用流（具体看后面）
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{Usaco2015 dec High Card Low Card}
+		\par 给定两个数组$a,b$，你需要选择时间$t$并重排列$a$
+		\par 在前$t$轮中$a_i>b_i$则产生$1$的贡献，之后$a_i<b_i$则产生$1$的贡献
+		\par 求最大贡献
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+
+		\onslide<1-> 记$f_i$为$t\ge i$时前$i$轮最多产生的贡献，$g_i$为$t<i$时$i$轮及以后产生的最大贡献
+
+		\onslide<2-> 显然要贴着边界去选，然后找$t$让$f_t+g_{t+1}$最大
+
+		\onslide<3-> 如果一个数$x$选了两次，那么至少有一个数$y$没有被选，若$y>x$，那么在把$t$之前的$x$换为$y$不会劣，$y<x$同理
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{种树}
+		\par 有一个长度为$n$的环，每个点有权值，选择$m$个两两不相邻的点且权值和最大。
+		\par 求这最大的权值
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 考虑到每次要么选一个周围没被选过的点，要么一段区间向外扩展一段
+
+		\onslide<2-> 相当于选一个点$a_i$后把$a_{i-1},a_i,a_{i+1}$缩为$a_{i-1}+a_{i+1}-a_i$
+
+		\onslide<3-> 维护最大值即可
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{POI2008 MAF-Mafia}
+		\par 给定$n$个神枪手，每个神枪手瞄准一个人，以一定顺序开枪，问最少和最多死多少人
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+		\onslide<1-> 显然，这是一个基环树森林
+
+		\onslide<2-> 对于一个联通块
+		
+		\onslide<2-> 一个自环：答案始终是$1$
+
+		\onslide<2-> 一个大小为$a$的环：答案$\lfloor\dfrac a2\rfloor\sim a-1$
+
+		\onslide<2-> 一个不只有环的基环树：最大是只剩入度为$0$的，最小是入度为$0$的依次开枪，直到没有没开过枪的活人或剩一个环
 	\end{frame}
 	\clearpage
 	\begin{frame}
@@ -49,7 +108,7 @@
 	\begin{frame}
 		\frametitle{CF1208G Polygons}
 		\par 给定$n,k$
-		\par 你需要构造$k$个有相同外接圆，使得边数在$3\sim n$间且边数两两不同
+		\par 你需要构造$k$个有相同外接圆的多边形，使得边数在$3\sim n$间且边数两两不同
 		\par 你可以任意旋转它们，求它们与这个外接圆的最少交点数
 		\par 下面是$n=6,k=2$（边数为$3,6$）的一种方案
 		\par \includegraphics[width = 0.4\textwidth]{1.png}
@@ -78,6 +137,7 @@
 	\begin{frame}
 		\frametitle{solution}
 		\onslide<1-> 做$n$次，每次把与当前序列中第一个配对的移到前面来（有相同值就取第一个），然后删除
+
 		\onslide<2-> 考虑证明
 
 		\onslide<2-> 显然，当$S_i$有相同的时候，贪心从前往后配对（并给新标号）是对的，记$p_v$为$v$的位置
@@ -147,7 +207,7 @@
 
 		\onslide<5-> 解法自然
 
-		\onslide<6-> 讲课人相信，这次美妙的讲课，可以给即将AK[NOIP2019|HNOI2020|NOI2020|WC2021|CTS2021|IOI2021]的你，提供一个有力的帮助
+		\onslide<6-> 讲课人相信，这次美妙的讲课，可以给即将AK[CSP2019|HNOI2020|NOI2020|WC2021|CTS2021|IOI2021]的你，提供一个有力的帮助
 	\end{frame}
 	\clearpage
 	\begin{frame}
