@@ -1,0 +1,138 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\begin{document}
+
+\title{Water Problem Choose Talk}
+\date{\today}
+\maketitle
+\clearpage
+
+\begin{frame}
+	\frametitle{WC2021 Day-1 T1}
+
+	一个由$nmk$个小正方体组成的体积为奇数的立方体，你在$(1,1,1)$，请找到一条到$(\frac{n+1}2,\frac{m+1}2,\frac{k+1}2)$的路径（每个小正方体可以走到和它有公共面的小正方体），经过所有立方体恰好一次。
+
+	无解输出$-1$。
+
+	$nmk\le 10^5$。
+
+	Subtask: $n=1$/$n=m=k$。
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{WC2021 Day-1 T2}
+
+	给定$n,a_{1\dots n-1},p_{1\dots n}$，求$b_{1\dots n}$，满足$b_ib_{i+1}\ge a_i$，求下式最小值：
+
+	$$
+	\sum_{i=1}^n b_ip_i
+	$$
+
+	$n\le 2000$。
+
+	Subtask：$p_i=1$/$a_i=1$/$n\le 20$/$n\le 200$。
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{WC2021 Day0 T1}
+
+	给定一个无向简单联通图，满足图内对于所有点数多于$3$的简单环，存在一条不在环上的连接环上两点的边。
+
+	保证它的最大团大小为偶数。
+	
+	将点分为两个点集$A,B$，使$A,B$导出子图最大团大小相等。
+
+	节点数$\le 10^5$
+
+	无解输出$-1$。
+\end{frame}
+\clearpage
+
+\begin{frame}
+	\frametitle{WC2021 Day0 T3}
+
+	给定一棵树，第$i$条边连接$u_i,v_i$，且有两个权$a_i,b_i$。
+
+	一个人从$u_i$走到$v_i$（或$v_i$走到$u_i$）需要$a_i$天，且每天$u_i$，$v_i$最多$b_i$人走到第$i$条边上（可以$u_i$进入$b_i$人，同时$v_i$进入$b_i$人）。
+
+	给定每个点的人口，求最快需要几天，他们可以到达同一个点，或者走到同一条边上。
+
+	节点数$\le 10^5$。
+
+	Subtask: $b_i=1$。
+
+\end{frame}
+\clearpage
+
+\begin{frame}
+	\frametitle{AGC002F}
+
+	\url{https://atcoder.jp/contests/agc002/tasks/agc002_f}
+\end{frame}
+\clearpage
+
+\begin{frame}
+	\frametitle{AGC002F solution}
+
+	显然最后有$k-1$个$1\sim n$和$n$个$0$。
+	
+	从后往前放，记$f_{i,j}$表示放了$i$个$0$，且第$i$个$0$放在位置$j$。
+
+	转移枚举上一个$0$的位置，复杂度$O(n^3)$，前缀和优化成$O(n^2)$。
+
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{UOJ449 喂鸽子}
+
+	\url{https://uoj.ac/problem/449}
+
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{solution}
+
+	min-max 反演，变成某个集合最早喂饱的。
+
+	只要求出$i$个鸽子的集合，喂$j$次依然没饱的概率即可。
+	
+	dp即可。
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{AGC020E}
+
+	\url{https://atcoder.jp/contests/agc020/tasks/agc020_e}
+
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{AGC023E}
+
+	\url{https://atcoder.jp/contests/agc023/tasks/agc023_e}
+
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{AGC024E}
+
+	\url{https://atcoder.jp/contests/agc024/tasks/agc024_e}
+
+\end{frame}
+\clearpage
+\begin{frame}
+	\frametitle{AGC030D}
+
+	\url{https://atcoder.jp/contests/agc030/tasks/agc030_d}
+
+\end{frame}
+
+\end{document}
