@@ -1,0 +1,214 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\begin{document}
+	\title{杂题水讲}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{前言}
+	
+		\begin{itemize}
+			\item juju都会，不会的可以问juju。
+			\item 一共$ $道题，全是CF的，难度平均值为$ $。
+		\end{itemize}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1007 C. Guess two numbers}
+		交互，两个数$a,b\in[1,10^{18}]$，你每次可以询问$x,y$，会根据条件回答（满足多个只会回答一个）：
+		\begin{enumerate}
+			\item $x<a$
+			\item $y<b$
+			\item $x>a$或$y>b$
+		\end{enumerate}
+		你询问$x=a,y=b$时通过此题，次数限制$600$。
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution (*3000)}
+	
+		显然，一开始满足所有询问的是一个正方形，然后若干次询问后变为一个长方形或一个L型，二分求解是$O(\log^2)$的。
+
+		注意到有些询问二分的话对面积的消减比较小，可以在$0.8$处询问，这样可以让常数变得比较小，足以通过。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1491 H. Yuezheng Ling and Dynamic Tree}
+		给定$n-1$个数$f_{2\dots n}$，有两个操作（共$q$次）：
+		\begin{itemize}
+			\item 给定$l,r,x$，令$f_{l\dots r}$减去$x$，并对$1$取较大值。
+			\item 给定$u,v$，将$i,f_i$连边，形成$1$作为根的树，求$u,v$的lca。
+		\end{itemize}
+		$n,q\le 10^5$，1.5s。
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution (*3400)}
+	
+		似乎没有好的$O(n~\mathrm{poly}(\log))$做法，考虑$O(n^{1.5})$。
+
+		lca可以$O(\sqrt n)$求，不妨记两个数组：$f,F$，$f$是父亲，$F$是一个祖先。
+
+		分为$\sqrt n$块，同时记$F$为不在同一块内的最深的祖先，不难发现求lca是$O(\sqrt n)$的。
+
+		考虑对一整个块求$F$是$O(\sqrt n)$的，这个过程记为$1$次build。
+
+		修改时，对两个散块进行build，复杂度是$O(q\sqrt n)$的。
+
+		考虑到每一个块，如果对整块修改了$\sqrt n$次，那么$F=f$，就只要维护$f$了。
+
+		均摊下来，一共进行$\sqrt n\times \sqrt n=n$次build，总复杂度$O((n+q)\sqrt n)$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1548 E. Gregor and the Two Painters}
+	
+		给定$n,m,a_{1\dots n},b_{1\dots m},x$，生成一个$n\times m$的黑白矩阵，$(i,j)$为黑当且仅当$a_i+b_j\le x$。
+		
+		求黑色连通块数。
+
+		$n,m,a,b\in [1,200000]$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution (*3400)}
+	
+		对于一个连通块只在$a_i+b_j$最小的格子处统计，相等统计$i,j$最大的。
+
+		如果一个格子$(i,j)$所在连通块$(x,y)$被统计到，一定有$(i,y)$或$(x,j)$的值大于$(i,j)$，且与$(i,j)$联通。
+
+		不难发现，可以得到$n+m$个区间$B_{1\dots n},A_{1\dots m}$，$(i,j)$被统计当且仅当$a_i\in A_j,b_j\in B_i$，扫描线+简单数据结构维护即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF891 E. Lust}
+	
+		$n$个数，$m$次操作，每次选$1$个数，记录下除它外所有数的乘积，并将它减1。
+
+		对所有操作方案所有记录下的数求和，模$10^9+7$。
+
+		$n\le 5000,k\le 10^9$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution (*3000)}
+	
+		不妨先考虑这些数等于0的情况，令$f_{m,n}$表示所有数成绩的和（除以$(-1)^mn!$）。
+
+		$$
+		f_{m,n}=\sum_i \dfrac{i}{i!}f_{m-1,n-i}
+		$$
+
+		不难发现：
+
+		$$
+		e^{x}x=\sum_i \dfrac{1}{i!}x^{i+1}=\sum_i \dfrac{i}{i!}x^i
+		$$
+
+		令$[x^n]F_m(x)=f_{m,n}$，则：
+		
+		$$
+		F_m(x)=F_{m-1}(x)e^xx=x^me^{mx}
+		$$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		也就是说$f_{m,n}=m^{n-m}$。
+
+		然后令最终数组$c_i=a_i-b_i$，只要考虑乘多少个$b_i$，可以通过dp来确定系数。
+
+		然后枚举不计入乘积的数，通过上面dp的逆过程算出其它的数的dp值即可。
+
+		另外需要注意一些细节，复杂度$O(n^2)$。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1336 F. Journey}
+
+		一棵树，若干条路径，求有多少对路径交点数$\ge k$。
+
+		$n,q\le 1.5\times 10^5,k\le n$,4s。
+
+		不会可以想一想下面两个简化版：
+
+		\begin{enumerate}
+			\item 树是条链。
+			\item $k\le 10$。
+		\end{enumerate}
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution 1}
+	
+		考虑两条路径的交点，如果点数为$x$，那么有：
+
+		长为$k$的公共路径有$x-k+1$条。
+
+		长为$k+1$的公共路径有$x-k$条。
+
+		但$x<k$时，上述两个都为$0$。
+
+		不难发现，用上述两个值相减，就等于$[x\ge k]$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution 1}
+	
+		问题转化为，求每两条路径的长为$k$的公共路径的数量和。
+	
+		不难发现，如果一条路径是$a_{1\dots m}$，那么将它拆成两条路径$a_{1\dots k},a_{2\dots m}$，答案不变。同理，拆成$m-k+1$条路径$a_{i\dots i+k-1}$答案也不变。
+
+		对链上每个位置记录一下这有多少条路径即可。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution 2}
+	
+		同理，可以拆成若干条直上直下的路径和一条长为$2k-1$的路径。
+
+		$k$很小，暴力拆开即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution (*3500)}
+	
+		现在的问题是lca处长为$2k-1$的路径不好处理。
+
+		之前所有推论都没有指定根，不妨指定重心为根。
+
+		先把所有路径尽可能拆开，剩下的分为两种：lca为重心的和不为重心的。
+
+		lca不为重心的路径都在同一颗子树内，可以递归子树，这和点分治是一样的。
+
+		只要处理lca为重心的即可。
+
+		显然，可以在遍历树时用启发式合并。
+
+		复杂度$O(n\log^2 n)$。
+	
+	\end{frame}
+\end{document}
