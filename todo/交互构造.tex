@@ -1,0 +1,355 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\begin{document}
+	\title{构造 \& 交互}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{前天的题}
+	
+		三堆石头，每次可以将一堆石头$a$中部分石头移到另一堆$b$，移的数量必须与$b$中石头数量相等。
+
+		将一堆石头移空。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{four stone}
+	
+		四个数$x,y,z,w$，每次可以选择两个数$a,b$，将它们变为$2b-a,b$。
+
+		将它们变为$X,Y,Z,W$，顺序不论。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{NOIP2020}
+	
+		$n+1$个栈，栈的大小为$m$，前$n$个栈是满的。可以发现，一共有$nm$个数，其中分别有$n$个$1,\dots,m$。
+
+		可以取出一个栈的栈顶，插入另一个栈。
+
+		你需要通过若干次操作，使第$n+1$个栈依然为空，前$n$个栈第$i$个栈有$m$个$i$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{操作的逆}
+	
+		后面两题显然可逆，第一题\textbf{似乎}不满足。
+
+		操作可逆的话，就有如果$S$状态是可行的，$S\stackrel*\Rightarrow T$，那么有$T\stackrel*\Rightarrow S$，所以$T$也是可行的。
+
+		\onslide<2->
+
+		思考难度要求会变小：
+		
+		\begin{itemize}
+			\item 不断简化，依然是可行，后一步可以用到前一步结果所保证的性质。
+			\item 可以尝试用若干操作的复合：$f=\mathrm{op}_1 \circ \mathrm{op}_2 \circ \dots \circ  \mathrm{op}_k$。
+		\end{itemize}
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{有条件的逆操作}
+	
+		第一题先只考虑两堆石头，如果是一奇一偶（或者同时除以$2^k$），那么操作后依然是一奇一偶。
+
+		一个状态$T$，经过操作变为$f(T)$的话，显然不存在$S\not=T,f(S)=f(T)$，因为每一个$T$都是可以找到唯一的逆（但不一定存在操作）：将偶数除以$2$。
+
+		所以$f$是一个满射，定义域和值域相等，所以$f$是双射。
+
+		这样显然会成为若干个环，在环上绕一圈会回到原点，少走一步会走到$f^{-1}(T)$，在这种情况下存在逆！
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{复合操作}
+	
+		第一题可以将$T\stackrel*\Rightarrow f^{-1}(T)$，作为一个复合操作。
+
+		第二题可以将对于三个数$a,b,c$，把一个数$a$，平移$2|b-c|$作为一个复合操作。
+
+		第三题可以将保证操作后第$n+1$个栈依然为空的前提下交换两个元素作为一个复合操作。
+
+		这些操作保持了可逆性，所以任意操作都不会让本来可行的操作变得不可行。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{第一题}
+	
+		一次操作可能会将两个数大小不可控地改变，但是在复合操作中，无论初始如何，最后都会使原来的偶数变为一半。
+
+		条件加强的话：如果原来的偶数是$4$的倍数，复合操作后它会变为$2$的倍数，依然是一个偶数。
+
+		如果有两个偶数$a,b$和一个奇数$c$，如果$a\ge b$，那么先操作$f(<a,b>)=<a-b,2b>$，然后操作$f^{-1}(<2b,c>)=<b,b+c>$，这样会保持$a,b,c$的奇偶性，同时让$c$变大。
+
+		不断让$c$变大直到$a,b$一个为$0$即可。
+
+		其它情况可以通过若干次操作变为两偶一奇的情况。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{后两题}
+	
+		留作练习。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{优化思路}
+	
+		考虑更加特化的复合操作：步数少/功能强，但是对状态的要求变高。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{2021集训队互测 部分分}
+	
+		有$6k+3$个点的完全图，将这$\dfrac{(6k+3)(6k+2)}{2}$条边划分为$\dfrac{(6k+3)(6k+2)}{6}$个三角形。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CTT2020 部分分}
+	
+		有$n$个点，连接$k$条边，使得不存在生成子图为左右点数均为$m$的完全二分图。
+
+		令$p$为质数，解决：
+
+		\begin{itemize}
+			\item $n=p^2,k=p^3,m=2$。
+			\item $n=p^3,k=p^5,m=3$。
+		\end{itemize}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{2021集训队互测}
+	
+		给定$n,m$，满足$2m\ge n$，令$f(n,k)$为$0\sim 2^{n-1}$中二进制数为$1$个数为$k$的数的集合。
+
+		求单射$g:f(n,m+1)\rightarrow f(n,m)$，满足$x~\operatorname{and} g(x)=g(x)$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{怎么构造}
+	
+		条件看似不多，但构造间两两相互制约，一不小心就会出错。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{优秀的构造}
+	
+		取模系是一个十分优秀的构造：
+		
+		\begin{itemize}
+			\item 模$k$意义下$x+0\sim x+k-1$互不相同。
+			\item 模$p$意义下$0\sim x(p-1)$互不相同（$x,p$互质）。
+		\end{itemize}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{往取模上靠}
+
+		构造函数$g$，然后让所有$g(S)\equiv 0 \pmod p$的$S$成为你的构造。
+
+		证明可以固定若干变量然后解另一变量（下面会用例子解释）。
+		
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{第一题}
+	
+		将$6k+3$个点划分为$3$个大小为$2k+1$的集合，给所有点$0\sim 2k$标号。
+		
+		然后令$f(x,y,z)=x+y-2z$，对于所有$f\equiv 0$的$x,y,z$，让第$i$个集合内的编号为$x,y$，和第$i+1$个集合内编号为$z$的三个点组成三角形。
+
+		可以发现，所有边都只会出现一次：不同集合内的$x,z$，都可以解出唯一的$y$，同一集合内的$x,y$，也会解出唯一的$z$。
+		
+		但是$x,y,z$不能相等，因为只有$f(k,k,k)=0$，所以所有不合法的三角形，所没连上的边，只有不同集合间的同标号的元素，用一个三角形给这些边连上即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{深入思考}
+	
+		如果$f'(x,y,z)=x+y-z$，这也是最直观的想法，不妨想想怎么由$f'$想到$f$。
+
+		这样会出现边$(i,2i)$的遗漏，但是$(1,2),(2,4)$却没有$(4,1)$边会使得最后一步进行不了。
+
+		但是如果缺的是$(i,i)$，就形成了若干个环。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{更进一步}
+	
+		如果有$12k+7$个点的话：
+
+		给第一个点依次与剩下的点形成$6k+3$个三角形，这样可以得到$6k+3$个两两之间已经有边的二元组。
+
+		先求出$6k+3$的一个解，如果$(x,y,z)$在解内，考虑给第$x,y,z$这三个二元组两两间连上边。
+
+		$h(u,v,w)=u+v+w$即可，解$u/v/w$的过程就是证明。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{第二题}
+	
+		只说第一个subtask，第二个留作练习。
+
+		将每个点与一个$n\times n$的矩阵上的格点一一对应，然后：
+
+		$g(x,y)=x\cdot y$，$\cdot$是点乘。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{第三题}
+	
+		\sout{鸽，}留作练习。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{小总结}
+	
+		猜个生成方式写了就交，反正IOI赛制？
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{交互题}
+	
+		啥都可以出交互题，所以简单讲讲一些常用方法吧。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{信息论}
+	
+		试证明仅支持查询偏序关系的情况下排序是$O(n\log n)$的。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{证明}
+	
+		$k$次询问只能区分出$2^k$个排列，所以最优是$O(\log n!)=O(n\log n)$的。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{前两天的题}
+	
+		$n$个人，每一个人可以看到前面每个人帽子的颜色，从后往前依次询问每一个人他自己帽子的颜色，回答可以被前面的人听见，最大化回答正确人数。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		根据信息论，答案是$\dfrac 12n$！
+
+		\onslide<2->
+
+		但总的信息量是$2n-2$bit，只要让每一个人尽可能多的用上知道的信息即可。
+
+		但是如果让后面的人点对点地告诉前面的人信息，就不可能做到$n-1$，可以通过简单的方式知道思路的可行性。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CTT2020 试机}
+	
+		$n+1$个人，每个人有一顶帽子，上面写了长为$n$的01串，每个人只能看到别人的。
+
+		每一轮，每一个人可以在一张大家都能读写的纸上写1的01字符，或是说出自己头顶上的帽子的01串。
+
+		求最少轮数。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		留作练习。
+		
+		提示：答案是2轮，考虑每一个人得到的信息。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{我的互测题}
+	
+		有根树，每次可以询问若干子树的并中点两两距离和，求出这棵树。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{另一道互测题}
+	
+		\sout{哪道是最水的互测题？}
+
+		一个排列$p:[0,n-1]\rightarrow[0,n-1]$，可以操作使得$S\leftarrow S+2^{p_i}$，返回$S$的值为$1$的位数。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		放出来给大家乐乐的，\sout{留作练习。}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CTT2021 D2T2}
+	
+		令一个长度为$n$的01序列的$f$值为：$f(A)=\sum_{i=0}^{n-1}A_ip_i2^i$。
+
+		保证$p_{n-1}=1,p_{n-2}=-1$，其它$p$都是$-1$或$1$。
+
+		你可以询问两个序列$A,B$，会返回一个序列$C$，满足$f(A)+f(B)\equiv f(C) \pmod {2^n}$。
+
+		$6$次询问求出$p$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		$f(11111111\dots)+f(100100100\dots)=?$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{互测题}
+	
+		你有$\infty b$的内存，会调用$2^{26}$次，每一次你可以访问修改不超过$6$个位置，返回是否是最后一次。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{小总结}
+
+		交互构造\sout{不会就是不会}没有什么普遍有效的方法，这里介绍了几个常用的思考路径，但是记住一个原则：简化问题！
+
+	\end{frame}
+\end{document}

@@ -1,0 +1,141 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\begin{document}
+	\title{CTT2021部分题水讲}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{D2T1}
+
+		支持$3$个操作：全体对某一个数取$\min$，全体加下标，求一段区间和。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D2T1}
+	
+		求每一个点第一次被取min时间即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D2T2}
+	
+		令一个长度为$n$的01序列的$f$值为：$f(A)=\sum_{i=0}^{n-1}A_ip_i2^i$。
+
+		保证$p_{n-1}=1,p_{n-2}=-1$，其它$p$都是$-1$或$1$。
+
+		你可以询问两个序列$A,B$，会返回一个序列$C$，满足$f(A)+f(B)\equiv f(C) \pmod {2^n}$。
+
+		$\log^2n$次询问求出$p$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D2T2}
+	
+		$f(1111111\dots)+f(100100100\dots)=?$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D2T3}
+	
+		一个$n$个点的有向图，初始$i$向$i+1$连边，加$m$条边，可以有重边自环，求$1$到$n$随机游走期望步数最大值。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D2T3}
+	
+		显然向$1$连边。
+
+		求求导，发现后面的点连的边数$j$和前面连的边数$i$满足：$i\le j\le i+2$。
+
+		再求求导，发现恰有一个比最后一个连的边少$2$。
+
+		等比数列求和即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D3T1}
+	
+		一棵$1$为根的树，给定一个排列$p:[2,n]\rightarrow [2,n]$，每一个点都是白的。
+
+		按照排列顺序依次给$[2,n]$染黑。
+
+		如果某一个时刻对于任意一个黑色的节点，子树内所有点都是黑的，那么就称这个时间是好的。
+
+		求所有好的时刻，黑色连通块个数和。
+
+		动态修改（加删边）这棵树。
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D3T1}
+	
+		$1$所在连通块数？
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D3T2}
+	
+		给定一个序列$a_{1\dots n},a_i\in[-1000,1001]$，且随机生成。
+
+		询问若干$[l,r]$，求$[l',r']\subseteq [l,r]$下式最大值：
+
+		$$
+		\dfrac{1}{r'-l'+1}(\sum_{i=l'}^{r'} a_i)^2
+		$$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D3T2}
+	
+		对于一个$l$，$[l,r_1],[l,r_2],\dots$且依次递增的不会很多。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D4T1}
+	
+		给定$n,p$，求最小的$k$，使得$n^{k+1}+1\bmod p=0$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D4T1}
+	
+		求阶即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D4T2}
+	
+		一个$n$个点的树，每个点上有若干个棋子，每次可以将一个点上面的一个棋子移到它的子树内。
+
+		动态加棋子，每次询问一个点和和它相邻的点，有几个满足即使在任意一个点上放一个棋子，依然满足先手必胜。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{D4T2}
+	
+		考虑换根贡献即可。
+	
+	\end{frame}
+\end{document}

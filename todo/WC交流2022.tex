@@ -1,0 +1,226 @@
+% 严格被包含与"交互构造"，有大量的改动
+
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\setbeamercolor{footnote mark}{fg=blue}% set footnote color in beamer
+\setbeamerfont{footnote}{size=\tiny}
+\begin{document}
+	\title{营员交流-一类常见交互、构造题的常用解题方式}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{简介}
+
+		在出现过的交互、构造题中，不难发现一类交互构造题出现非常频繁：
+
+		一开始会决定一种初始局面，你可以进行若干次操作，每次操作会改变局面，并且综合当前局面和你的操作返回一个值。你需要得出初始局面或是将局面转化至给定的另一局面。
+
+		通常的，交互题不会告诉你初始局面；构造题会告诉你初始局面，但返回值为空（也就是说你无法得到信息）。
+		
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{一般思路}
+	
+		因为考试的时间通常只有$5$个小时，在*OI比赛中，一般来说只能分配至多$3$小时时间；在*CPC比赛中，即使某一个人完全只想这道题，也只有$4$小时的时间。
+
+		所以，最主要的路线就是简化题目：
+
+		\begin{enumerate}
+			\item 筛选得到的信息，即牺牲一些操作次数来简化信息。
+			\item 将操作所造成的改变尽可能的减少。
+			\item 如果一道题目涉及多个对象，使用统一的操作可以减少分析难度。
+			\item 将所有操作分步，将初始或是结束局面变得平凡，或是变为几个独立的子问题。
+		\end{enumerate}
+
+		一般来说，第$4$种方法只能起到减少分类讨论难度的作用，作用情况也十分的明显：通常是给定初始和结束状态，操作可逆，可以找一个中间状态$M$，把问题规约至结束状态一定为$M$的题目。
+		
+		重点的是前三种方法，运用得当可以直接让难度下降一个层次。
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{一般思路}
+	
+		另外，也有几种比较常见的思路：
+
+		\begin{enumerate}
+			\item 重复操作。
+			\item 考虑操作的逆。
+			\item 考虑利用所有已知信息。
+		\end{enumerate}
+
+		下面挑部分题目具体地讲解这些方法（下文的$C$表示一个常数）。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{tree\footnote[1]{笔者的集训队互测题，https://ioihw21.duck-ac.cn/contest/15/problem/110}}
+	
+		有一颗$n$个点有根树，你可以给出一个集合，交互库会返回集合内所有点的子树组成的集合中所有点两两间距离和，在$(2\log n+C)n$次询问中求出这棵树。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		使用两次询问，$Q(S),Q(S\cup\{u\})$，可以知道$S$中是否存在$u$的祖先。
+
+		现在就转化为$(\log n+C)n$次询问一个点是否在一个集合内存在祖先，可以先给所有点按子树大小排序（单独使用$Q(\{u\})$），然后在这个序列上二分，容易证明这是正确的做法。
+
+		在与同学交流时，面对原问题往往束手无策，但面对转化后的问题，虽然可能需要使用$(2\log n+C)n$甚至更多操作，但是由完全不会，或是次数$O(n^2)$降低至了$O(n\log n)$，可见这个“简单”的转化起到的作用有多明显。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{整数\footnote[1]{孙嘉伟的集训队互测题，https://ioihw21.duck-ac.cn/contest/16/problem/141}}
+	
+		交互库有排列$p:[0,n)\rightarrow[0,n)$，并内置了一个整数$I$，你可以询问$Q(a)$，交互库会将$I$加上$2^{p_i}$，并返回$I$中$1$的个数。
+
+		在$O(Cn\log n)$的时间内求出排列$p$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		如果不再询问上做些“操作”，整数$I$的进位规律将变得难以发现，但是如果两个一组地（对一个值$u$连续询问两次）进行询问，且仅关心第一次和第二次的大小关系，这样会：
+
+		\begin{enumerate}
+			\item 返回$I$的第$p_u$为是否为$1$。
+			\item 给$I$的第$p_u+1$位加$1$。
+		\end{enumerate}
+
+		如果按照另一排列$q$的顺序依次给每一个数连续询问两遍，可以得到每一个数$p_u$，令$p_v=p_u-1$，$v$和$u$的大小关系。
+
+		随机排列$q$，然后在对于每一个$p_u$找到它的前驱即可，按照上述步骤执行$O(C\log n)$次就只有极小的概率出错。
+
+		特别的，给$I$归位需要先知道$0$的位置，询问：$Q(0),Q(1),\dots,Q(n-1),Q(0),Q(1),\dots,Q(n-1)$即可知道$0$的位置。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{Empty the bucket\footnote[1]{http://www.cs.cmu.edu/puzzle/puzzle5.html}}
+	
+		你有三瓶水，你可以从一个瓶子$a$里倒出和瓶子$b$中现有的等量的水给瓶子$b$，制造一个空瓶子出来。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		每一次操作$a,b$都可能会造成：
+		\begin{itemize}
+			\item $a$水比$b$多/相等。
+			\item $a$水比$b$少。
+		\end{itemize}
+		同时又要求$a$水不少于$b$，这样频繁变动的大小关系会对解题不利。
+
+		但是发现$a+b$是奇数时，操作可逆，考虑逆操作$b,a$：仅要求$b$是偶数，操作后$a$一定大于$b$；特别的$b$是$4$的倍数时$a,b$奇偶性不变。{\color{red}可以看出逆操作非常的“简单”。}
+
+		将初始局面规约至两奇一偶，然后不断用$4$的倍数的偶数使那个奇数变大即可。
+
+		第一步的规约过程很简单（甚至可以随机操作），后面如果两个偶数都不是$4$的倍数，对它们进行操作即可，这样可以得到两个$4$的倍数的。
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{Hat Problems 1\footnote[1]{http://www.cs.cmu.edu/puzzle/puzzle15.html}}
+	
+		$n$个人面朝东方站成一排，每个人头顶有一个黑白帽子。每一个人只能看到他东方所有人的帽子。
+
+		这一排人按西至东的顺序依次报出黑色或白色，每一个人可以听到他西方所有人报的答案。
+
+		构造策略，使得至少$n-1$个人报出的颜色和他头顶帽子的颜色相同。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		最后一个人只能看运气，不考虑，只考虑前面所有人的策略。
+
+		不妨假设每一个人的策略一致：报出的数为$f(b_1,b_2,\dots,b_{n-1})$，其中$b$是知道的每一个信息。
+
+		考虑相邻两个人$x,x+1$得到的信息的差别：
+
+		$x+1$知道$x$帽子的颜色$u$，$x$知道$x+1$报出的答案$v$，不难发现$v$就是$x+1$帽子的颜色。
+
+		即要求：
+
+		$$
+		\begin{aligned}
+			b_u=f(b_1,b_2,\dots,b_{u-1},b_{u+1},\dots,b_n)\\
+			b_{u+1}=f(b_1,b_2,\dots,b_{u},b_{u+2},\dots,b_n)
+		\end{aligned}
+		$$
+
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{solution}	
+		
+		所以如果$u=v$，那么$x,x+1$个人得到的信息一致，他们需要报的答案也相同；反之亦然。
+
+		所以最优策略在任意恰好一位改变的情况下改变，不难发现“将获得的所有信息异或”这一策略满足条件。
+
+		另外，如果第$n$个人报出前$n-1$个人帽子颜色的异或和，那么第$n-1$个人报出的颜色将会是正确的，于是前$n-1$个人报出的颜色全都是正确的了。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{拓展}
+	
+		如果求报出的和帽子颜色不同的最大值？
+
+		\onslide<2->
+
+		考虑相邻两人的答案，帽子颜色不同时，他们得到的信息相同；反之亦然。上一题的方法似乎不能用了？
+
+		\onslide<3->
+
+		不难发现，我们忽略了一个重要信息，当前的位置，不妨考虑进当前位置的奇偶性：
+		
+		颜色相同时，恰有两位不同；不同时，恰有一位不同。
+
+		和上题一样，将所有信息异或即可，第$n$个人分奇偶讨论一下即可。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{聚会\footnote[1]{王蔚澄的集训队互测题} 部分分}
+	
+		初始有$6n+3$个点，每一次操作可以使三个点间两两连边，要求本来没有连边。
+
+		求若干次操作，使得这张图变为了完全图。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{solution}
+	
+		这些点是对称的，可以给这些点对称地进行操作，不妨把这$6n+3$个点排成一个$3\times(2n+1)$的矩形，然后：
+
+		对$(x,i),(x,j),(x+1,k),i+j-2k=p(2n+1)$操作。
+		
+		对$(1,i),(2,i),(3,i)$操作。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{总结}
+	
+		通过上面的题面，相信读者对以上方法有了初步的了解了。
+
+		但同时，交互构造题以“新”著名，几乎没有几道想法完全相同的题目，在合理运用如上方法的同时，多练，多想，多试有利于更快速，轻松地解决此类问题。
+	
+	\end{frame}
+\end{document}
