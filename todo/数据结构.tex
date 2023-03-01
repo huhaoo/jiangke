@@ -8,6 +8,8 @@
 \usepackage{ulem}
 \usefonttheme[onlymath]{serif}
 \usetheme{metropolis}
+\setbeamercolor{footnote mark}{fg=blue}% set footnote color in beamer
+\setbeamerfont{footnote}{size=\tiny}
 \begin{document}
 	\title{数据结构}
 	\date{\today}
@@ -15,9 +17,159 @@
 	\maketitle
 	\clearpage
 	\begin{frame}
-		\frametitle{序列上的数据结构}
+		\frametitle{前言}
 	
-		线段树、分块。
+		基本算法看情况跳过，除非很多人都不会。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{RMQ}
+	
+		复杂度很优秀，可以在卡时限的情况下考虑。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1523H\footnote{https://codeforces.com/problemset/problem/1523/H}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{分块}
+
+		将序列分成大小为$W$的$\dfrac nW$块，使得每次询问和修改都是$O(\sqrt n\operatorname{poly} \log n)$。
+
+		或是分为大小为$\dfrac{\log n}{2}$的若干块，预处理所有可能的不同块。\sout{应该不会考}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{Yuezheng Ling and Dynamic Tree\footnote{https://codeforces.com/problemset/problem/1491/H}}
+	
+		一棵$n$个点的有根树，每个点$i$的父亲为$f_i$，$f_i<i$，你需要支持：
+
+		\begin{enumerate}
+			\item 给定$l,r,x$，令$l\sim r$内所有$f_i$变为$\max(1,f_i-x)$。
+			\item 给定$u,v$，求$\operatorname{lca}(u,v)$。
+		\end{enumerate}
+
+		复杂度要求$O(n\sqrt n)$。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{线段树}
+	
+		相信lazytag之类的大家都会。
+
+		相信区间取$\min,\max$大家都会。
+
+		相信插入一次函数求单点$\min$大家都会。
+
+		相信维护每一段区间有多少前缀$\max$大家都会。
+
+		\sout{讲完了。}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CTT 2021D2T1}
+		
+		支持$3$个操作：全体对某一个数取$\min$，全体加下标，求一段区间和。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{树链剖分}
+	
+		修改查询相信大家都会。
+
+		因为树链剖分的目的就是将树上问题转化为序列上问题，所以，有的树上dp题目，也可以使用树链剖分。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{互测题\footnote{时间不详，好像叫做黑白沙漠来着}}
+	
+		求一棵树，每个点有一个点权，对于每一个$k$，求点数为$k$的最大权独立集。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{点分治}
+	
+		\sout{相信大家都会}。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{LCT}
+	
+		相信大家也会。
+
+		相信大家还会维护子树信息的。
+
+		例题可以看CTT2021D3T1。
+
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{路径问题}
+	
+		在树上，路径问题可以被看作是一个三元问题（要关心lca），主要有三种简化方案：
+
+		\begin{enumerate}
+			\item 点分治，变成若干集合的问题。
+			\item 启发式合并。
+			\item \sout{树链剖分，变为链上问题}。
+		\end{enumerate}
+
+		其中主要是第一种思路，如果复杂度比较紧，也可以考虑只要单$\log$的线段树合并。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{例}
+	
+		求树上有多少长度为$l$的路径。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{连通块问题}
+	
+		连通块个数为点减边的数量。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CTT2021D3T1}
+	
+		一棵$1$为根的树，给定一个排列$p:[2,n]\rightarrow [2,n]$，每一个点都是白的。
+
+		按照排列顺序依次给$[2,n]$染黑。
+
+		如果某一个时刻对于任意一个黑色的节点，子树内所有点都是黑的，那么就称这个时间是好的。
+
+		求所有好的时刻，黑色连通块个数和。
+
+		动态修改（加删边）这棵树。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{莫队}
+	
+		基本的相信大家都会，进阶的：
+
+		\begin{itemize}
+			\item 树上莫队，\sout{想怎么做就怎么做。}
+			\item 多维莫队，和二维一样，块大小$n^{\frac{d-1}{d}}$。
+			\item 在线询问莫队，块大小$n^{\frac 23}$，存下$n^{\frac 23}$组信息，询问就用最近的那一个按普通莫队的方式询问。
+			\item 不删除莫队，先移动右端点，再移动左端点，然后还原左端点。
+			\item 二次离线，单次移动复杂度高，但是把$n^{1.5}$个移动的贡献一起算会简单很多。
+		\end{itemize}
 	
 	\end{frame}
 \end{document}

@@ -1,0 +1,148 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\setbeamercolor{footnote mark}{fg=blue}% set footnote color in beamer
+\setbeamerfont{footnote}{size=\tiny}
+\begin{document}
+	\title{概率论选讲}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{测度论}
+	
+		\sout{这阴间玩意要讲吗。}
+
+		\sout{这阴间玩意的PPT是人写的吗。}
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{重要等式}
+	
+		若$X_1\dots X_n$是独立的，则：
+
+		$$
+		\mathrm{var}(\sum X_i)=\sum \mathrm{var}X_i
+		$$
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{大数定理}
+	
+		若$X_1\dots $有相同分布且是独立的（简称i.i.d.），且$E|X_1|<\infty$，则：
+
+		$$
+		\dfrac 1n\sum_{i=1}^n X_i\rightarrow EX_1
+		$$
+
+		\sout{很符合直觉}
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		$X_1\dots $是i.i.d.，且$P(X_1=2^{-n}-k)=2^{-n},n\in Z^+$，估计：
+
+		$$
+		n^{-1}\sum_{i=1}^n X_i
+		$$
+
+		\onslide<2->
+
+		显然会趋近于$\infty$，但是上面的定理不能直接用，可以通过删去$X>2^{k+2}$部分来使用定理。
+
+		当然有更加精确的估计：
+
+		$$
+		\dfrac 1{n\log_2 n}\sum_{i=1}^n X_i\rightarrow 1
+		$$
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{切比雪夫不等式}
+	
+		对于任意集合$A$和函数$\phi$，有：
+
+		$$
+		P(X\in A) \inf_{y\in A} \phi(y)\le E \phi(X)
+		$$
+
+		最为常用的特例是：$a^2P(|X|\ge a)\le EX^2$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		连续投一个硬币$n$次，估计投出正面次数的范围。
+
+		\onslide<2->
+
+		定义$X_i$根据第$i$次投出的正反决定是$+1/-1$，那么：
+
+		$$
+		EX_i^2=1
+		$$
+
+		所以：
+
+		$$
+		P(|\sum X|\ge m)\le m^2n
+		$$
+
+		若要它小于$\epsilon$，令$m=\sqrt{n\epsilon^{-1}}$即可。
+
+		所以可以发现投出正面的次数几乎都在以$\dfrac n2$为中心$O(\sqrt n)$的区间内。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		你若通过蒙特卡洛算法去求一个$\mathrm{var}X=\sigma^2$的$X$的期望，那么你运行$n$次，可以得到：
+
+		$$
+		P(|\dfrac 1n\sum X-EX|\ge m)\le m^2n\sigma^2
+		$$
+
+		所以每多运行$100$倍的$n$你就能多信任一位的数字。
+
+		（这是一个比较松的下界，但是中心极限定理会告诉你上面那句话不能再紧了）
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Kolmogorov’s maximal inequality}
+	
+		对于$X_1\dots $，它们相互独立且$EX_i=0$，则：
+
+		$$
+		P(\max_i |S_i|\ge x)\le x^{-2}\mathrm{var} S_i
+		$$
+
+	\end{frame}
+	\begin{frame}
+		\frametitle{中心极限定理}
+	
+		若$X_1\dots $是i.i.d.，且$EX_1=\mu, \mathrm{var}X_1=\sigma^2\in(0,\infty)$，则：
+
+		$$
+		\dfrac{1}{\sigma\sqrt n}\sum_{i=1}^n(X_i-\mu)\Rightarrow \chi 
+		$$
+
+		这个渐进式是不是比切比雪夫不等式的特例强很多？
+
+		\onslide<2->
+
+		\sout{你敢直接认为$a_i=\lim_{n\rightarrow \infty} a_n$吗。}
+
+		例题可以看SDOI2017 龙与地下城。
+	
+	\end{frame}
+
+\end{document}

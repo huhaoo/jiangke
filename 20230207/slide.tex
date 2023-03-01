@@ -1,0 +1,78 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\setbeamercolor{footnote mark}{fg=blue}% set footnote color in beamer
+\setbeamerfont{footnote}{size=\tiny}
+\begin{document}
+	\title{水题水讲}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{Lowest-cost search}
+
+		已知$x\in [1,n]$，你需要通过若干次询问$x$与$y$的大小关系来确定$x$，且这样的询问会有花费$y$。
+
+		令$f(n)$为最优策略下，最坏情况需要的花费。
+
+		求：
+
+		$$
+		\sum_{i=1}^{200000} f(n)
+		$$
+
+		\sout{时限1h}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Paddle Star}
+	
+		给定$l_1,l_2,\alpha,\beta$满足$l_1\ge l_2,\alpha\ge \dfrac \pi2,\beta\le \pi$。对于平面上任意确定两点$X,P$，令$Y$满足$\angle YXP\in[-\alpha,\alpha],XY=l_1$，令$Z$满足$\pi-\angle XYZ\in[-\beta,\beta],YZ=l_2$，求折线$XYZ$能覆盖的面积。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Skills}
+
+		有三种技能，你有$n$天时间训练，每天只能训练一个技能，第$i$天训练技能$j$加$a_{i,j}$熟练度。
+
+		如果一个技能最近$k$天都没有训练，那么熟练度减$k$，熟练度低于0时会变为0。
+
+		$n\le 1000,0\le a_{i,j}\le 10000$
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Tree Distance}
+
+		给定一棵$n$个点的树，有$m$次询问，每次询问$l,r$，需要回答：
+
+		$$
+		\min_{l\le i<j\le r} \operatorname{dist}(i,j)
+		$$
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Iterative Sampling}
+	
+		令$a_0=[1,\dots,n]$，$a_{i},i\ge 1$是一个长度为$n$的序列，且每一个元素的生成方式为在$a_{i-1}$中等概率随机挑一个元素。
+
+		令$T$为最小的$T$满足$a_T$所有元素均相同，求$ET$。
+
+		$n\le 5000$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Birds on a Wire}
+	
+		$[0,1]$上均匀地撒$n$个点，对于每个点，染黑它到和它最近的点组成的线段。
+
+		求被染黑的长度期望。
+	
+	\end{frame}
+\end{document}

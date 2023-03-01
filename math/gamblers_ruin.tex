@@ -1,0 +1,216 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usepackage{amsmath}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\setbeamercolor{footnote mark}{fg=blue}% set footnote color in beamer
+\setbeamerfont{footnote}{size=\tiny}
+\begin{document}
+	\title{赌徒破产问题}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\clearpage
+	\begin{frame}
+		\frametitle{}
+		Consider a game that gives a probability α of winning 1 dollar and a probability β = 1–α of losing 1 dollar. If a player begins with (say) 10 dollars, and intends to play the game repeatedly until he either goes broke or increases his holdings to N dollars, what is his probability of reaching his desired goal before going broke.\footnote{www.mathpages.com/}
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		考虑一组i.i.d随机变量$X_1\dots X_n$，其中$P(\nu\le X\le \mu)=1$，且$P(X=\nu)>0,P(X=\mu)>0$，令$S_n=\sum_{i\le n}X_n,T=\min\{n\ge 1:S_n\le -L\vee S_n\ge H\}$，求：
+
+		$$
+		P(S_{T}\le -L)
+		$$
+
+		在下面，一般只考虑$X\in Z$的情况。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		$P(X=-1)=p,P(X=1)=q,P(X=0)=1-p-q$，求：
+
+		$$
+		P(S_T=1),ET
+		$$
+
+		如果$P(X=-2)=p$呢
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		不妨令$u(i)$为$S_0=i$时（即令$S_n=i+\sum X_j$），$P(S_T\ge H)$的值。
+
+		不难发现：
+
+		\begin{equation}
+			u(i)=\sum_{j}P(X=j)u(i+j) \tag{1}
+		\end{equation}
+
+		以及
+		
+		\begin{equation}
+			u(i)=0,i\le -L\tag{2}
+		\end{equation}
+		\begin{equation}
+			u(i)=0,i\ge H \tag{3}
+		\end{equation}
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		不妨考虑$1=\sum_i x^iP(X=i)$，显然它的解和：
+
+		$$
+		f(x)=x^\nu-\sum_i x^{i+\nu}P(X=i)
+		$$
+
+		零点相同，不妨令$\lambda_i$为这些零点，且$k_i$为重数，则：
+
+		$$
+		u(x)=\lambda_i^x
+		$$
+
+		显然可以满足(1)。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		更为一般的，若$f(x)=(x-\lambda_i)^j g(x)$，则有：
+
+		$$
+		u(x)=x^j\lambda_i^x
+		$$
+
+		也满足(1)。
+
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		令
+
+		$$
+		u(x)=\sum_{i,j} a_{i,j}x^j\lambda_i^x
+		$$
+
+		那么显然$u$满足(1)。
+
+		又因为$a$一共有$\nu+\mu$个变元，而边界条件可以看作又$\nu+\mu$个等式，所以可以通过解出$a_{i,j}$求出$u$的表达式。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		$P(X=2)=p,P(X=-1)=q$，解$u$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		类似的，可以发现，若要求$EN$，则有：
+
+		$$
+		v(i)=1+\sum_j P(X=j) v(i+j)
+		$$
+
+		于是$v=v_g+v_p$，$v_g$是齐次方程的解，$v_p$是任一特解。
+
+		如果$EX\not=0$，那么$v_p(x)=cx$能解出一特解。（否则可以试试$v_p=cx^2$，再否则试试$v_p=cx^3$……）
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		再来考虑一下$H=+\infty$的情况，一般来说，只需要使用上面的方法，令$H\rightarrow \infty$即可。
+
+		但是，有一种更为简便的方法。
+
+		当然，如果$EX\le 0$，那么显然赌徒一定会破产。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{}
+	
+		考虑之前的那个$f$，\sout{显然}它在$|z|<1$有$\nu$个零点$\eta_1\dots \eta_\nu$。
+
+		则：
+
+		$$
+		P_{ruin}(M)=\sum_{n=1}^\nu \Phi_{n,M-n+1}(\eta_1\dots \eta_n)\prod_{j=1}^{n-1}(1-\eta_j)
+		$$
+
+		其中$\Phi$是完全齐次对称多项式：
+
+		$$
+		\Phi_{n,r}(z_1\dots z_n)=\sum_{i_j\ge 0,\sum i_j=r}\prod_{j=1}^nz_j^{i_j}
+		$$
+
+		若$\eta$互不相同，则：
+
+		$$
+		P_{ruin}(M)=\sum_{j=1}^{\nu}\eta_j^M\prod_{i\not=j}\dfrac{1-\eta_i}{\eta_j-\eta_i}
+		$$
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		$P(X=-2)=P(X=1)=\dfrac 12$
+
+		\onslide<2->
+
+		$$
+		1=\dfrac{1}{2}(x+x^{-2})
+		$$
+
+		解得：
+
+		$$
+		\{x\to 0.877439\, -0.744862 i\},\{x\to 0.877439\, +0.744862 i\},\{x\to -0.754878\}\
+		$$
+
+		\sout{所以答案是$-0.754878^M$。}
+
+	\end{frame}
+	\begin{frame}
+		\frametitle{例}
+	
+		$P(X=-2)=P(X=3)=\dfrac 12$
+
+		\onslide<2->
+
+		不难发现：
+
+		$$
+		\{\{x\to 0.848375\},\{x\to -0.660993\}\}
+		$$
+
+		直接代回那个式子即可。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{St. Petersburg Lottery}
+	
+		$P(X=-m+2^k)=2^{k-1},k\in Z$，求$m=15$时：
+
+		$$
+		P_{ruin}(10^9)
+		$$
+
+		保留$7$为小数。
+	
+	\end{frame}
+\end{document}

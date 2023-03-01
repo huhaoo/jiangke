@@ -1,0 +1,329 @@
+\documentclass[10pt]{beamer}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{ulem}
+\usefonttheme[onlymath]{serif}
+\usetheme{metropolis}
+\setbeamercolor{footnote mark}{fg=blue}% set footnote color in beamer
+\setbeamerfont{footnote}{size=\tiny}
+\begin{document}
+	\title{杂题水讲}
+	\date{\today}
+	\author{huhao}
+	\maketitle
+	\begin{frame}
+		\frametitle{开胃题}
+
+		一张$n$个点的简单无向图，若没有三元环，边数最多有多少。
+	\end{frame}
+	\begin{frame}
+		\frametitle{solution}
+	
+		显然是$\dfrac {n^2}4$，完全二分图就是一个合法的构造。
+
+		但是怎么证明不存在边更多的方案？
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{proof}
+	
+		\newtheorem{lemma1}{引理:}[section]
+		\begin{lemma1}
+			$$
+			\sum_{i} d_i^2\le nm
+			$$
+
+			证明：考虑每一条边两个端点连出的边数和，显然不大于$n$。
+		\end{lemma1}
+
+		所以：
+
+		$$
+		\dfrac{4m^2}{n}=\sum_i (\dfrac{2m}n)^2\le \sum_id_i^2\le nm
+		$$
+
+		所以$m\le \dfrac{n^2}{4}$。
+	\end{frame}
+	\begin{frame}
+		\frametitle{博弈}
+	
+		大小为$a,b$的两堆石头，每次可以分别在两堆中取出$c,d$个，要求$|ad-bc|=1$，不能取的输，判断必胜状态。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{solution}
+	
+		只考虑$\gcd(a,b)=1$：$a<b$时，$2|a$必败，否则必胜。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{简单DP}
+	
+		
+		小$l$发明了一种可以在日后与图灵机相提并论的机器，因为他特别强，所以他不需要你帮他设计机器，只需要统计出有多少个$n$个点的机器即可，每一个机器都如下：
+		\begin{itemize}
+		\item 机器由点、有向边以及无相边构成，有且仅有两个有向边不连接图中两点：一条只有出点，一条只有入点。
+		\item 所有点有且仅有一条出边，一条入边，一条无相边与它相连。
+		\item 所有边均不是自环，由上一条可以发现 不可能存在重边。
+		\item 点与点，边与边均不可区分。
+		\item 若将图的有向边视为无相边，则图联通。
+		\end{itemize}
+
+		$n\le 5000$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{solution}
+	
+		考虑给每一个点一个唯一的标号。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{sum}
+	
+		求：
+
+		$$
+		(\sum_i \lfloor\dfrac ni\rfloor+\lfloor\sqrt n\rfloor)\bmod 2
+		$$
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{博弈题}
+	
+		在$(2n)^2$的网格里有$1\sim (2n)^2$的数，AB两人依次取数，除了第一次外都必须与之前至少一次取数位置相邻。
+
+		如果一个人取到的数总和较大，那么他就获胜了。AB两人足够聪明。
+
+		试构造方案，使得A/B获胜。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{NOI2016 旷野大计算}
+	
+		休息一下
+		
+		\url{https://www.luogu.com.cn/problem/P1737}
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{构造简单函数}
+
+		$\rm sgn$：
+
+		$$
+		-1+2\lim_{t\rightarrow +\infty}s(2^tx)=\mathrm{sgn}(x)
+		$$
+
+		$I(x)=x$：
+
+		不难发现$4s(x)=2+x+o(x),x\rightarrow 0$。
+
+		所以
+		$$
+		c^{-1}(4s(cx)-2)=x+o(1),c\rightarrow 0
+		$$
+
+		$[op]x$：
+
+		$$
+		c^{-1}(4s(cx-\infty)-2)+c^{-1}(4s(cx+\infty)-2)=0
+		$$
+
+		$|x|$：
+
+		组合一下$\mathrm{sgn},[op]x$即可。
+		
+	\end{frame}
+	\begin{frame}
+		\frametitle{solution}
+	
+		\sout{拆一下二进制就做完了吧。}
+
+		那个乘以$0.1$就找一条斜率$0.1$的切线就好了。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{AGC011E}
+	
+		定义一个数是递增的，当且仅当它每一位数字都比前面的大。
+
+		给定一个大整数（$10^{10^6}$级别），输出它最少是几个递增的数的和。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{AGC011E}
+	
+		不难发现，一个递增的数可以表示为：
+
+		$$
+		\sum_{i=1}^9\dfrac{10^{p_i}-1}{9}
+		$$
+
+		简单讨论一下即可。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Rascal 三角}
+	
+		定义Rascal三角为：
+
+		\begin{itemize}
+			\item 第$i$行有$i$个元素，第一个和最后一个是$1$。
+			\item 位置为$(i,j)$的左上方，右上方，正上方的元素分别为：$(i-1,j-1),(i-1,j),(i-2,j-1)$。
+			\item 每一个元素都是它左上方乘以右上方加一，然后除以正上方的元素。
+		\end{itemize}
+
+		试找出Rascal三角的通项公式。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Det}
+	
+		定义$f_{1,i}=f_{i,1}=1,f_{i,j}=f_{i-1,j}+f_{i,j-1}$（$i,j\le n$）。
+
+		求$\det f$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Swap}
+	
+		你有一个数组$f_{1\dots n},f_i=(i\bmod n)+1$，你想通过若干次swap使得$f_i=i$。
+
+		但是对于两个指针只能swap一次，特别的，一开始$f_i,f_{(i\bmod n)+1}$间不能使用swap。
+
+		你可以引入若干新的变量来进行辅助，试找到方案，使得引入变量个数不超过$2$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{solution}
+	
+2  3  4  5  6  …  k   1  x  y 
+
+x  3  4  5  6  …  k   1  2  y
+
+x  y  4  5  6  …  k   1  2  3
+
+x  y  3  5  6  …  k   1  2  4
+
+x  y  3  4  6  …  k   1  2  5
+
+x  y  3  4  5  …  k   1  2  6
+
+… … …
+
+x  y  3  4  5  … k-1  1  2  k
+
+x  y  3  4  5  … k-1  k  2  1
+
+x  2  3  4  5  … k-1  k  y  1
+
+1  2  3  4  5  … k-1  k  y  x
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Guess 1}
+	
+		有$2^n$个人，背后都有$1\sim 2^n$的数，每个人都可以看到别人的数。
+
+		构造方案，使得至少一个人可以正确的猜出他背后的数。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Guess 2}
+	
+		有$n$个人，背后都有一个实数，每个人都可以看到别人的数。
+		
+		每个人可以选择回答A或B，要求从小到大排序后，相邻两个人回答的不同。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Possiblility}
+	
+		有$n$个人$n$个座位，一开始第一个人会随机坐一个座位，然后其他人会依次坐在一个位子上，他们会优先选择与他们编号相同的位置，如果这个位子有人了，那么随机坐一个位置。
+
+		求第$n$个人坐在每一个位置上的概率。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{The Imp}
+	
+		有$n$个商品，价格$p_i$，价值$q_i$。
+
+		你要依次买若干商品，买入时商品价值可能变为$0$，最多变$k$次。
+
+		求最大的价值减价格和。
+
+		$nk\le 10^8$。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Easy Equation}
+	
+		求$1000$组下式的正整数解，要求大小不超过$10^{100}$。
+	
+		$$
+		a^2+b^2+c^2=k(ab+bc+ca)+1
+		$$
+
+	\end{frame}
+	\begin{frame}
+		\frametitle{Insider’s Information}
+	
+		对于排列$p$，给定若干组限制$a,b,c$，表示$p_b$是$p_a,p_b,p_c$的中位数。
+		
+		你需要求排列$p$，使得至少有一半限制被满足。
+
+		特别的，至少存在一个排列使得所有限制均被满足。
+	\end{frame}
+	\begin{frame}
+		\frametitle{Virus synthesis}
+	
+		给定字符串，求可以最少通过几次操作从空串变为这个字符串。
+	
+		\begin{enumerate}
+			\item 在字符串开头或结尾加上一个字符。
+			\item 翻转字符串，并加在开头或结尾。
+		\end{enumerate}
+
+	\end{frame}
+	\begin{frame}
+		\frametitle{Intractive}
+	
+		AB两人都有不超过$n$个$1\sim n$的数，在AB交流不超过$O(\log n)$bit的前提下找到中位数。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{https://ioi2010.org/Tasks/Translations.shtml}
+	
+		Coming soon!
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{IOI2010 D2T4 Saveit}
+	
+		一个$n$个点的无权无向图，通过传输不超过70000bit信息分别表示出所有点到$1$到$m$号点的距离。
+		
+		$n\le 1000,m\le 36$
+	\end{frame}
+	\begin{frame}
+		\frametitle{Parenthesis Values}
+	
+		定义一个括号序列的值，为每一个括号的嵌套层数的乘积。
+
+		求所有长度$2n$的括号序列的值的和。
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Two Coins}
+	
+		给定$n$，找到两个硬币，可以用来模拟一个$n$面的骰子。
+
+		模拟必须在有限步内完成，硬币正反概率不必相同。
+	
+	\end{frame}
+\end{document}

@@ -43,31 +43,115 @@
 	\end{frame}
 	\clearpage
 	\begin{frame}
-		\frametitle{AGC056D\footnote{\url{https://atcoder.jp/contests/agc056/tasks/agc056_d}}}
+		\frametitle{AGC056C\footnote{\url{https://atcoder.jp/contests/agc056/tasks/agc056_c}}}
 
-		$n$个数，$n$为偶数，AB轮流选，A先，如果A选的数字和在$[l,r]$中，A胜，否则B胜。
+		给定若干区间，构造出一个01序列，满足所有区间中01个数相同。
 
-		AB都选择最优策略，求最终谁胜。
+		求字典序最小的方案。
 
-		$n\le 5000$。
-
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1299E\footnote{https://codeforces.com/problemset/problem/1299/E}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1548E\footnote{https://codeforces.com/problemset/problem/1548/E}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{AGC032E\footnote{https://atcoder.jp/contests/agc032/tasks/agc032\_e}}
+	
 	\end{frame}
 	\clearpage
 	\begin{frame}
 		\frametitle{solution}
 	
+		显然是划分为两半，前面一半对称连边，后面一半也是。
+
+		显然划分点越前越好，找到最前的划分点即可。
+	
 	\end{frame}
 	\clearpage
 	\begin{frame}
-		\frametitle{AGC056E\footnote{\url{https://atcoder.jp/contests/agc056/tasks/agc056_e}}}
+		\frametitle{THE LIGHTS OF THE ROUND TABLE}
 	
-		$n$个人站成一个环拿加特林玩俄罗斯轮盘，一共进行$n-1$次，每一次加特林会以不同的概率被递给某一个人。
+		$n$个灯泡分布在一个环上，一开始有部分亮并有部分暗，你每次可以指定某些位置灯泡，并改变它们的通电情况。
 
-		加特林在一个人手上时，他必须对自己开一枪，子弹有$\dfrac 12$的概率是空包弹，如果他没死，就递给顺时针的下一个人，直到有人死了。
+		不巧的是，在改变前，这个环都会以某种方式旋转若干角度，你必须依然改变那些位置上的灯泡。
 
-		对每一个人求他最终活下来的概率。
+		求是否有方案使得所有灯泡变亮。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{简单组合恒等式}
+	
+		$$
+		\sum_i {m\choose 2i}{m-2i\choose n-i}2^{2i}
+		$$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{简单证明题}
+	
+		$f_{i,j}=\max\{f_{i-1,j-1},f_{i-1,j},f_{i-1,j+1}\}+a_{i,j},f_{1,x}=[x=1]a_{1,x},f_{0,x}=f_{x,0}=f_{n+1,x}=f_{x,n+1}=\infty,\sum_{j}a_{m,j}=1,F=\min_i\{f_{n,i}\}$，求$F$的最大值（并证明）。
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{AGC044C\footnote{https://atcoder.jp/contests/agc044/tasks/agc044\_c}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{AGC030D\footnote{https://atcoder.jp/contests/agc030/tasks/agc030\_d}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{AGC027D\footnote{https://atcoder.jp/contests/agc027/tasks/agc027\_d}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{AGC023E\footnote{https://atcoder.jp/contests/agc023/tasks/agc023\_e}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{AGC045B\footnote{https://atcoder.jp/contests/agc045/tasks/agc045\_b}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{Project Euler 439\footnote{https://projecteuler.net/problem=439}}
+	
+		$$
+		\sum_{<i,j>\in[1,n]^2}\sigma_1(i,j)
+		$$
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF1292E\footnote{https://codeforces.com/problemset/problem/1292/E}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{CF848E\footnote{https://codeforces.com/contest/848/problem/E}}
+	
+	\end{frame}
+	\clearpage
+	\begin{frame}
+		\frametitle{ICPC2022 Jinan G, Quick Sort}
 
-		$n\le 40$。
+		给定序列，求快排中swap次数。
+
+		$n\le 5\times 10^5$
 	
 	\end{frame}
 \end{document}
